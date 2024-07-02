@@ -1,85 +1,145 @@
-var entities = [];
+var entity = {
+  init: (self) => {
+    for (var i = 0; i < self.properties.entities.length; i++) {
+      var o = self.properties.entities[i];
+      o.init(o);
+    }
+  },
+  update: (camera, self) => {
+    for (var i = 0; i < self.properties.entities.length; i++) {
+      var o = self.properties.entities[i];
+      if ((((o.properties.x + o.properties.width) - camera.properties.x) >= 0 && (o.properties.x - camera.properties.x) < camera.properties.width) && (((o.proeprties.y + o.properties.height) - camera.properties.y) >= 0 && (o.properties.y - camera.properties.y) < camera.properties.height)) {
+        o.update(ctx, o);
+      }
+    }
+  },
+  properties: {
+    entities: [],
+  },
+  helpers: {
+    addEntity: (data, self) => {
+      self.entities.push(data);
+    }
+  },
+};
 
-function defaultEntityUpdate(ctx, self) {
-  self.x += self.dx;
-  self.y += self.dy;
-  self.dy += ACCELY;
-  self.dy = Math.min(MAXSPEEDY, self.dy);
-  var onground = false;
-  if (!self.dx) {
-    self.dx = 1;
+function buildEnemy(data) {
+  var data2 = {
+    init: (self) => {
+      self.respawn(self);
+    },
+    update: (camera, level, player, self) => {
+      self.helpers.render(camera, self);
+      self.helpers.update(level, player, self);
+    },
+    properties: {
+      x: 0,
+      y: 0,
+      respawnx: 0,
+      respawny: 0,
+      dx: 0,
+      dy: 0,
+      health: 1,
+      maxhealth: 1,
+      accely: 0.25,
+      maxspeedy: 16,
+      collisionbufferx: 2,
+      collisionbuffery: 17,
+      color: '#f00',
+    },
+    helpers: {
+      update: (level, player, self) => {
+        self.properties.x += self.properties.dx;
+        self.properties.y += self.properties.dy;
+        self.properties.dy += self.properties.accely;
+        self.properties.dy = Math.min(self.properties.maxspeedy, self.properties.dy);
+        var onground = false;
+        if (!self.properties.dx) {
+          self.properties.dx = 1;
+        }
+        for (var i = 0; i < level.properties.terrain.length; i++) {
+          var o = level.properties.terrain[i];
+          for (var j = self.properties.y; j < self.properties.y + (self.properties.height / 2); j++) {
+            if (self.properties.x > o.properties.x - self.properties.width && self.properties.x < (o.x - self.properties.x) + self.properties.collisionbufferx && (j >= o.properties.y && j <= o.properties.y + o.properties.height)) {
+              self.properties.x = o.properties.x - self.properties.width;
+              self.properties.dx = -1;
+            }
+          }
+          for (var j = self.properties.y + 1; j < self.properties.y + (self.properties.height / 2); j++) {
+            if (self.properties.x < o.properties.x + o.width && self.properties.x > (o.properties.x + o.properties,width) - self.properties.collisionbufferx && (j >= o.properties.y && j <= o.prperties.y + o.properties.height)) {
+              self.properties.x = o.properties.x + o.properties.width;
+              self.properties.dx = 1;
+            }
+          }
+          for (var j = self.properties.x + 1; j < self.properties.x + self.properties.width - 1; j++) {
+            if (self.properties.y > o.properties.y - self.properties.height && self.properties.y < (o.properties.y - self.properties.height) + self.properties.collisionbuffery && (j >= o.properties.x && j <= o.properties.x + o.properties.width)) {
+              onground = true;
+              self.properties.y = o.properrties.y - self.properties.height;
+              self.properties.y += 1;
+              self.properties.dy = 0;
+            }
+          }
+          for (var j = self.properties.x + 1; j < self.properties.x + self.properties.width - 1; j++) {
+            if (self.properties.y < o.properties.y + o.properties.height && self.properties.y > (o.properties.y + o.properties.height) - self.properties.collisionbuffery && (j >= o.properties.x && j <= o.properties.x + o.properties.width)) {
+              self.properties.y = o.properties.y + o.properties.height;
+              self.properties.y -= 0;
+              self.properties.dy = 0;
+            }
+          }
+        }
+        var fallingleft = true;
+        var fallingright = true;
+        var j;
+        for (var i = 0; i < level.properties.terrain.length; i++) {
+          var o = level.properties.terrain[i];
+          j = self.properties.x + 1;
+          if (self.properties.y > o.properties.y - self.properties.height && self.properties.y < (o.properties.y - self.properties.height) + self.properties.collisionbuffery && (j >= o.properties.x && j <= o.properties.x + o.properties.width)) {
+            fallingleft = false;
+          }
+          j = self.properties.x + (self.properties.width - 2);
+          if (self.properties.y > o.properties.y - self.properties.height && self.properties.y < (o.properties.y - self.properties.height) + self.properties.collisionbuffery && (j >= o.properties.x && j <= o.properties.x + o.properties.width)) {
+            fallingright = false;
+          }
+        }
+        if (fallingleft && fallingright) {
+          fallingleft = false;
+          fallingright = false;
+          //self.properties.dx = self.properties.dx;
+        }
+        if (fallingleft) {
+          self.properties.dx = 1;
+          console.log('whyleft');
+        }
+        if (fallingright) {
+          self.properties.dx = -1;
+          console.log('whyright');
+        }
+        
+        if (self.properties.x >= player.properties.x - self.properties.width && self.properties.x <= player.properties.x + player.properties.width && self.properties.y >= player.properties.y - self.properties.height && self.properties.y <= player.properties.y + player.properties.height && !player.properties.cooldown) {
+          player.properties.health--;
+          player.properties.cooldown = 60;
+        }
+      },
+      render: (camera, self) => {
+        camera.properties.ctx.fillStyle = self.properties.color;
+        camera.properties.ctx.fillRect(Math.round(self.properties.x - camera.properties.x), Math.round(self.properties.y - camera.properties.y), self.properties.width, self.properties.height);
+      },
+    },
+  };
+  for (var i in data) {
+    data2[i] = data[i];
   }
-  for (var i = 0; i < terrain.length; i++) {
-    var o = terrain[i];
-    for (var j = self.y; j < self.y + self.height; j++) {
-      if (self.x > o.x - self.width && self.x < (o.x - self.x) + COLLISIONBUFFERX && (j >= o.y && j <= o.y + o.height)) {
-        self.x = o.x - self.width;
-        self.dx = -1;
-      }
-    }
-    for (var j = self.y + 1; j < self.y + (self.height / 2); j++) {
-      if (self.x < o.x + o.width && self.x > (o.x + o.width) - COLLISIONBUFFERX && (j >= o.y && j <= o.y + o.height)) {
-        self.x = o.x + o.width;
-        self.dx = 1;
-      }
-    }
-    for (var j = self.x + 1; j < self.x + self.width - 1; j++) {
-      if (self.y > o.y - self.height && self.y < (o.y - self.height) + COLLISIONBUFFERY && (j >= o.x && j <= o.x + o.width)) {
-        onground = true;
-        self.y = o.y - self.height;
-        self.y += 1;
-        self.dy = 0;
-      }
-    }
-    for (var j = self.x + 1; j < self.x + self.width - 1; j++) {
-      if (self.y < o.y + o.height && self.y > (o.y + o.height) - COLLISIONBUFFERY && (j >= o.x && j <= o.x + o.width)) {
-        self.y = o.y + o.height;
-        self.y -= 0;
-        self.dy = 0;
-      }
-    }
-  }
-  var fallingleft = true;
-  var fallingright = true;
-  var j;
-  for (var i = 0; i < terrain.length; i++) {
-    var o = terrain[i];
-    j = self.x + 1;
-    if (self.y > o.y - self.height && self.y < (o.y - self.height) + COLLISIONBUFFERY && (j >= o.x && j <= o.x + o.width)) {
-      fallingleft = false;
-    }
-    j = self.x + (self.width - 2);
-    if (self.y > o.y - self.height && self.y < (o.y - self.height) + COLLISIONBUFFERY && (j >= o.x && j <= o.x + o.width)) {
-      fallingright = false;
-    }
-  }
-  if (fallingleft && fallingright) {
-    fallingleft = false;
-    fallingright = false;
-    self.dx = self.dx;
-  }
-  if (fallingleft) {
-    self.dx = 1;
-    console.log('whyleft');
-  }
-  if (fallingright) {
-    self.dx = -1;
-    console.log('whyright');
-  }
-  
-  if (self.x >= player.x - self.width && self.x <= player.x + PLAYERWIDTH && self.y >= player.y - self.height && self.y <= player.y + PLAYERHEIGHT && !player.cooldown) {
-    player.health--;
-    player.cooldown = 60;
-  }
+  return data2;
 }
 
+/*
+function defaultEntityUpdate(camera, level, player, self) {
+  
+}
+*/
+
 function updateEntities(ctx) {
-  for (var i = 0; i < entities.length; i++) {
-    var o = entities[i];
-    if ((((o.x + o.width) - camera.x) >= 0 && (o.x - camera.x) < SCREENWIDTH) && (((o.y + o.height) - camera.y) >= 0 && (o.y - camera.y) < SCREENHEIGHT)) {
-      o.update(ctx, o);
-    }
-  }
+  
 }
 
 function renderEntities(ctx) {
@@ -91,12 +151,13 @@ function renderEntities(ctx) {
   }
 }
 
+/*
 function createEntityData(data) {
   var data2 = {...data};
   if (!data2.render) {
-    data2.render = (ctx, self) => {
-      ctx.fillStyle = ENEMYCOLOR;
-      ctx.fillRect(Math.round(self.x - camera.x), Math.round(self.y - camera.y), self.width, self.height);
+    data2.render = (camera, self) => {
+      camera.properties.ctx.fillStyle = self.properties.color;
+      camera.properties.ctx.fillRect(Math.round(self.x - camera.x), Math.round(self.y - camera.y), self.width, self.height);
     };
   }
   data2.dx = 0;
@@ -106,3 +167,4 @@ function createEntityData(data) {
   }
   return data2;
 }
+*/

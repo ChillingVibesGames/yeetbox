@@ -139,6 +139,7 @@ async function start() {
   level.init(codeinput.value, level);
   background.init(background);
   player.init(player);
+  entity.init(entity);
   // Init entities - later
   
   requestAnimationFrame(update);
@@ -177,3 +178,5 @@ codeinput.onkeydown = (e) => {
     started = true;
   }
 }
+
+fetch('./assets/defaultcode.txt').then((response) => response.text).then((text) => {codeinput.value = text});
