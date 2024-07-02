@@ -179,4 +179,4 @@ codeinput.onkeydown = (e) => {
   }
 }
 
-fetch('./assets/defaultcode.txt').then((response) => response.text()).then((text) => {codeinput.value = text});
+fetch('./assets/defaultcode.js').then((response) => response.text()).then((text) => {codeinput.value = text});
