@@ -156,7 +156,7 @@ function update(timestamp) {
   level.update(camera, level);
   audio.update(camera, audio);
   player.update(camera, level, input, player);
-  
+  entity.update(camera, level, player, entity);
   requestAnimationFrame(update);
   //setTimeout(update, 100);
 }

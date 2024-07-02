@@ -5,11 +5,11 @@ var entity = {
       o.init(o);
     }
   },
-  update: (camera, self) => {
+  update: (camera, level, player, self) => {
     for (var i = 0; i < self.properties.entities.length; i++) {
       var o = self.properties.entities[i];
       if ((((o.properties.x + o.properties.width) - camera.properties.x) >= 0 && (o.properties.x - camera.properties.x) < camera.properties.width) && (((o.proeprties.y + o.properties.height) - camera.properties.y) >= 0 && (o.properties.y - camera.properties.y) < camera.properties.height)) {
-        o.update(ctx, o);
+        o.update(camera, level, player, o);
       }
     }
   },
