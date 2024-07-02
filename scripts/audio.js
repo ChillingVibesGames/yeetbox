@@ -3,7 +3,7 @@ var audio = {
     self.properties.ctx = new AudioContext();
     self.properties.analyser = self.properties.ctx.createAnalyser();
     
-    var buffer = await self.helpers.getFile('./assets/underground.wav', self);
+    var buffer = await self.helpers.getFile('./assets/undergroundstereo.wav', self);
     
     self.properties.music = self.properties.ctx.createBufferSource();
     self.properties.music.buffer = buffer;
