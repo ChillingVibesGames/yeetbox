@@ -18,7 +18,7 @@ var entity = {
   },
   helpers: {
     addEntity: (data, self) => {
-      self.entities.push(data);
+      self.properties.entities.push(data);
     }
   },
 };
