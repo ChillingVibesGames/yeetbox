@@ -24,7 +24,7 @@ var entity = {
 };
 
 var entityBuilders = {
-  enemy: (data) => {
+  enemy: (data, properties) => {
     var data2 = {
       init: (self) => {
         self.respawn(self);
@@ -131,6 +131,9 @@ var entityBuilders = {
     };
     for (var i in data) {
       data2[i] = data[i];
+    }
+    for (var i in properties) {
+      data2.properties[i] = properties[i];
     }
     return data2;
   },
