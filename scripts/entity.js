@@ -77,7 +77,7 @@ var entityBuilders = {
             for (var j = self.properties.x + 1; j < self.properties.x + self.properties.width - 1; j++) {
               if (self.properties.y > o.properties.y - self.properties.height && self.properties.y < (o.properties.y - self.properties.height) + self.properties.collisionbuffery && (j >= o.properties.x && j <= o.properties.x + o.properties.width)) {
                 onground = true;
-                self.properties.y = o.properrties.y - self.properties.height;
+                self.properties.y = o.properties.y - self.properties.height;
                 self.properties.y += 1;
                 self.properties.dy = 0;
               }
