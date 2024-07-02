@@ -40,6 +40,8 @@ var entityBuilders = {
         respawny: 0,
         dx: 0,
         dy: 0,
+        width: 20,
+        height: 20,
         health: 1,
         maxhealth: 1,
         accely: 0.25,
