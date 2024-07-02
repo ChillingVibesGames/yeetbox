@@ -18,13 +18,13 @@ level.properties.terrain = [];
 level.properties.width = 1024;
 level.properties.height = 1024;
 
-for (var i = 0; i &lt; level.properties.height; i += 256) {
-  for (var j = 0; j &lt; level.properties.width; j += 128) {
+for (var i = 0; i < level.properties.height; i += 256) {
+  for (var j = 0; j < level.properties.width; j += 128) {
     level.properties.terrain.push({x: j, y: i + (j % 256) + 64, width: 128, height: 64});
   }
 }
 
-for (var i = 0; i &lt; level.properties.terrain.length; i++) {
+for (var i = 0; i < level.properties.terrain.length; i++) {
   level.properties.terrain[i] = level.helpers.createTerrainData(level.properties.terrain[i]);
 }
 */
@@ -36,13 +36,13 @@ level.properties.terrain = [];
 level.properties.width = 256;
 level.properties.height = 1024;
 
-for (var i = 0; i &lt; level.properties.height; i += 256) {
-  for (var j = 0; j &lt; level.properties.width; j += 128) {
+for (var i = 0; i < level.properties.height; i += 256) {
+  for (var j = 0; j < level.properties.width; j += 128) {
     level.properties.terrain.push({x: j, y: i + (j % 256) + 64, width: 128, height: 64});
   }
 }
 
-for (var i = 0; i &lt; level.properties.terrain.length; i++) {
+for (var i = 0; i < level.properties.terrain.length; i++) {
   level.properties.terrain[i] = level.helpers.createTerrainData(level.properties.terrain[i]);
 }
 */
@@ -54,13 +54,13 @@ level.properties.terrain = [];
 level.properties.width = 16384;
 level.properties.height = 16384;
 
-for (var i = 0; i &lt; level.properties.width; i += 256) {
-  for (var j = 0; j &lt; level.properties.height; j += 128) {
+for (var i = 0; i < level.properties.width; i += 256) {
+  for (var j = 0; j < level.properties.height; j += 128) {
     level.properties.terrain.push({x: j, y: i + (j % 256) + 64, width: 128, height: 64});
   }
 }
 
-for (var i = 0; i &lt; level.properties.terrain.length; i++) {
+for (var i = 0; i < level.properties.terrain.length; i++) {
   level.properties.terrain[i] = level.helpers.createTerrainData(level.properties.terrain[i]);
 }
 */
@@ -76,11 +76,11 @@ var numrects = 50;
 var maxsize = 100;
 var minsize = 32;
 
-for (var i = 0; i &lt; numrects; i++) {
+for (var i = 0; i < numrects; i++) {
   terrain.push({x: Math.floor(Math.random() * LEVELWIDTH), y: Math.floor(Math.random() * LEVELHEIGHT), width: Math.floor(Math.random() * (maxsize - minsize) + minsize), height: Math.floor(Math.random() * (maxsize - minsize) + minsize)});
 }
 
-for (var i = 0; i &lt; terrain.length; i++) {
+for (var i = 0; i < terrain.length; i++) {
   terrain[i] = createTerrainData(terrain[i]);
 }
 */
@@ -96,11 +96,11 @@ var numrects = 10000;
 var maxsize = 200;
 var minsize = 32;
 
-for (var i = 0; i &lt; numrects; i++) {
+for (var i = 0; i < numrects; i++) {
   level.properties.terrain.push({x: Math.floor(Math.random() * level.properties.width), y: Math.floor(Math.random() * level.properties.height), width: Math.floor(Math.random() * (maxsize - minsize) + minsize), height: Math.floor(Math.random() * (maxsize - minsize) + minsize)});
 }
 
-for (var i = 0; i &lt; level.properties.terrain.length; i++) {
+for (var i = 0; i < level.properties.terrain.length; i++) {
   level.properties.terrain[i] = level.helpers.createTerrainData(level.properties.terrain[i]);
 }
 */
