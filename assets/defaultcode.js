@@ -1,9 +1,22 @@
 // Uncomment these comments for example level generation.
 
-entity.properties.entities = [];
-entity.helpers.addEntity(entityBuilders.enemy({}, {x: 100}), entity);
 
 /*
+// Add one enemy
+entity.properties.entities = [];
+entity.helpers.addEntity(entityBuilders.enemy({}, {x: 100}), entity);
+*/
+
+/*
+// Add many enemies
+entity.properties.entities = [];
+for (var i = 0; i < 200; i++) {
+  entity.helpers.addEntity(entityBuilders.enemy({}, {x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000)}), entity);
+}
+*/
+
+/*
+// Add a climbable staircase
 level.properties.width = 2000;
 level.properties.height = 2000;
 
