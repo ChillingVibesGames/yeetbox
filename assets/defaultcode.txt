@@ -1,3 +1,5 @@
+// Uncomment these comments for example level generation.
+
 entity.addEntity(buildEntity({}));
 
 /*
