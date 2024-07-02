@@ -136,10 +136,10 @@ async function start() {
   camera.init(camera);
   input.init(input);
   await audio.init(audio);
-  level.init(codeinput.value, level);
   background.init(background);
   player.init(player);
   entity.init(entity);
+  level.init(codeinput.value, level);
   // Init entities - later
   
   requestAnimationFrame(update);
