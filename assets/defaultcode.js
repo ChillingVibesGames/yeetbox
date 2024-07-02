@@ -1,6 +1,7 @@
 // Uncomment these comments for example level generation.
 
-entity.helpers.addEntity(entityBuilders.enemy({}, {}), entity);
+entity.properties.entities = [];
+entity.helpers.addEntity(entityBuilders.enemy({}, {x: 100}), entity);
 
 /*
 level.properties.width = 2000;
