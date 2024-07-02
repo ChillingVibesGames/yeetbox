@@ -8,7 +8,7 @@ var entity = {
   update: (camera, level, player, self) => {
     for (var i = 0; i < self.properties.entities.length; i++) {
       var o = self.properties.entities[i];
-      if ((((o.properties.x + o.properties.width) - camera.properties.x) >= 0 && (o.properties.x - camera.properties.x) < camera.properties.width) && (((o.proeprties.y + o.properties.height) - camera.properties.y) >= 0 && (o.properties.y - camera.properties.y) < camera.properties.height)) {
+      if ((((o.properties.x + o.properties.width) - camera.properties.x) >= 0 && (o.properties.x - camera.properties.x) < camera.properties.width) && (((o.properties.y + o.properties.height) - camera.properties.y) >= 0 && (o.properties.y - camera.properties.y) < camera.properties.height)) {
         o.update(camera, level, player, o);
       }
     }
@@ -69,7 +69,7 @@ var entityBuilders = {
               }
             }
             for (var j = self.properties.y + 1; j < self.properties.y + (self.properties.height / 2); j++) {
-              if (self.properties.x < o.properties.x + o.width && self.properties.x > (o.properties.x + o.properties,width) - self.properties.collisionbufferx && (j >= o.properties.y && j <= o.prperties.y + o.properties.height)) {
+              if (self.properties.x < o.properties.x + o.width && self.properties.x > (o.properties.x + o.properties.width) - self.properties.collisionbufferx && (j >= o.properties.y && j <= o.prperties.y + o.properties.height)) {
                 self.properties.x = o.properties.x + o.properties.width;
                 self.properties.dx = 1;
               }
