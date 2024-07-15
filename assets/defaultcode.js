@@ -99,7 +99,7 @@ for (var i = 0; i < terrain.length; i++) {
 }
 */
 
-/*
+
 // Level 5 - Random Rectangles (Huge level)
 level.properties.terrain = [];
 
@@ -117,4 +117,3 @@ for (var i = 0; i < numrects; i++) {
 for (var i = 0; i < level.properties.terrain.length; i++) {
   level.properties.terrain[i] = level.helpers.createTerrainData(level.properties.terrain[i]);
 }
-*/
